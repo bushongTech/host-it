@@ -14,14 +14,14 @@ services:
       - microservice-net
     restart: unless-stopped
 
-  hello-microservice:
-    build:
-      context: ./hello-microservice
-    container_name: hello-microservice
-    ports:
-      - "8081:8080"  # Host port 8081 mapped to container port 8080
-    networks:
-      - microservice-net
-    restart: unless-stopped
+  # hello-microservice:
+  #   build:
+  #     context: ./hello-microservice
+  #   container_name: hello-microservice
+  #   ports:
+  #     - "8081:8080"  # Host port 8081 mapped to container port 8080
+  #   networks:
+  #     - microservice-net
+  #   restart: unless-stopped
 
 
