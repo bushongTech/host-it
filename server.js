@@ -30,17 +30,26 @@ const fetchWithTimeout = async (url, timeoutMs = 2000) => {
 // API: Get microservices with UIs
 app.get('/api/microservices', async (req, res) => {
   try {
+    
     const containers = await docker.listContainers();
     const services = [];
 
     for (const container of containers) {
+      
       const name = container.Names[0].replace(/^\//, '');
+
+
       if (name.startsWith('host-it')) continue; // ignore self
 
-      const portInfo = container.Ports.find(p => p.PublicPort === 8080);
+      
+      const portInfo = container.Ports.find(p => p.Type === 'tcp' && p.PublicPort);
+      
+
       if (!portInfo) continue; // skip if no exposed 8080 port
 
-      const url = `http://localhost:${portInfo.PublicPort}`;
+      const url = `http://${name}:${portInfo.PrivatePort}`;
+      console.log(`Trying ${name} at ${url}`);
+
       const response = await fetchWithTimeout(url);
 
       if (

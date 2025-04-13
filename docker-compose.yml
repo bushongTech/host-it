@@ -1,3 +1,7 @@
+networks:
+  microservice-net:
+    driver: bridge
+
 services:
   host-it:
     build: .
@@ -10,6 +14,14 @@ services:
       - microservice-net
     restart: unless-stopped
 
-networks:
-  microservice-net:
-    driver: bridge
+  hello-microservice:
+    build:
+      context: ./hello-microservice
+    container_name: hello-microservice
+    ports:
+      - "8081:8080"  # Host port 8081 mapped to container port 8080
+    networks:
+      - microservice-net
+    restart: unless-stopped
+
+
