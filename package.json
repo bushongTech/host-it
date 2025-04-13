@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dockerode": "^4.0.5",
     "express": "^5.1.0",
     "jsdom": "^26.1.0"
   }

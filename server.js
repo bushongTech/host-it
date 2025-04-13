@@ -1,77 +1,72 @@
-import express from "express";
-import path from "path";
-import { JSDOM } from "jsdom";
-import { exec } from "child_process";
-import { fileURLToPath } from "url";
+import express from 'express';
+import path from 'path';
+import Docker from 'dockerode';
+import { JSDOM } from 'jsdom';
+import { fileURLToPath } from 'url';
 
 const app = express();
-const HOST_PORT = 8080;
-const MICROSERVICE_PORT = 8080;
-const FETCH_TIMEOUT_MS = 2000;
+const PORT = 8080;
+const docker = new Docker({ socketPath: '/var/run/docker.sock' });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
 
-const fetchWithTimeout = async (url, timeoutMs) => {
+// Utility: fetch with timeout
+const fetchWithTimeout = async (url, timeoutMs = 2000) => {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const response = await fetch(url, { signal: controller.signal });
     clearTimeout(id);
     return response;
-  } catch (error) {
+  } catch {
     clearTimeout(id);
     return null;
   }
 };
 
-app.get("/api/microservices", async (req, res) => {
-  exec('docker ps --format "{{.Names}} {{.Ports}}"', async (err, stdout) => {
-    if (err) {
-      console.error("Error fetching containers:", err);
-      return res.status(500).json({ error: "Docker command failed" });
-    }
-
+// API: Get microservices with UIs
+app.get('/api/microservices', async (req, res) => {
+  try {
+    const containers = await docker.listContainers();
     const services = [];
-    const lines = stdout.trim().split("\n");
 
-    for (const line of lines) {
-      const [name, ...portParts] = line.split(" ");
-      const portInfo = portParts.join(" ");
+    for (const container of containers) {
+      const name = container.Names[0].replace(/^\//, '');
+      if (name.startsWith('host-it')) continue; // ignore self
 
-      const isHostIt = name.startsWith("host-it");
-      const exposesTargetPort = portInfo.includes(`:${MICROSERVICE_PORT}->`);
+      const portInfo = container.Ports.find(p => p.PublicPort === 8080);
+      if (!portInfo) continue; // skip if no exposed 8080 port
 
-      if (!isHostIt && exposesTargetPort) {
-        const url = `http://localhost:${MICROSERVICE_PORT}`;
-        const response = await fetchWithTimeout(url, FETCH_TIMEOUT_MS);
+      const url = `http://localhost:${portInfo.PublicPort}`;
+      const response = await fetchWithTimeout(url);
 
-        if (
-          response &&
-          response.ok &&
-          response.headers.get("content-type")?.includes("text/html")
-        ) {
-          try {
-            const html = await response.text();
-            const dom = new JSDOM(html);
-            const title = dom.window.document.title;
+      if (
+        response &&
+        response.ok &&
+        response.headers.get('content-type')?.includes('text/html')
+      ) {
+        try {
+          const html = await response.text();
+          const dom = new JSDOM(html);
+          const title = dom.window.document.title || name;
 
-            if (title) {
-              services.push({ name, port: MICROSERVICE_PORT, title });
-            }
-          } catch {
-            // Ignore services that returned bad HTML
-          }
+          services.push({ name, port: portInfo.PublicPort, title });
+        } catch {
+          // Skip malformed HTML
         }
       }
     }
 
     res.json(services);
-  });
+  } catch (err) {
+    console.error('Error accessing Docker:', err);
+    res.status(500).json({ error: 'Failed to list containers' });
+  }
 });
 
-app.listen(HOST_PORT, () => {
-  console.log(`Host-it is running at http://localhost:${HOST_PORT}`);
+app.listen(PORT, () => {
+  console.log(`Host-it running at http://localhost:${PORT}`);
 });
