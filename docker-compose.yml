@@ -1,0 +1,15 @@
+services:
+  host-it:
+    build: .
+    container_name: host-it
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+    networks:
+      - microservice-net
+    restart: unless-stopped
+
+networks:
+  microservice-net:
+    driver: bridge

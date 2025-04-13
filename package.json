@@ -1,0 +1,18 @@
+{
+  "name": "host-it",
+  "version": "1.0.0",
+  "description": "A Microservice host that displays microservices in an iframe.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "jsdom": "^26.1.0"
+  }
+}
