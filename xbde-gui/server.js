@@ -32,7 +32,13 @@ const fetchWithTimeout = async (url, timeoutMs = 2000) => {
 app.get('/api/user', (req, res) => {
   try {
     const userInfo = os.userInfo();
-    res.json({ username: userInfo.username });
+    
+    if(userInfo.username !== 'root'){
+      res.json({ username: userInfo.username });
+    } else {
+      res.json({ username: 'Admin' });
+    }
+    
   } catch (err) {
     console.error('Failed to get OS user info:', err);
     res.status(500).json({ username: 'Unknown' });
