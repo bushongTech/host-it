@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import os from 'os';
 import Docker from 'dockerode';
 import { JSDOM } from 'jsdom';
 import { fileURLToPath } from 'url';
@@ -27,25 +28,29 @@ const fetchWithTimeout = async (url, timeoutMs = 2000) => {
   }
 };
 
-// API: Get microservices with UIs
+// API: Get current OS user
+app.get('/api/user', (req, res) => {
+  try {
+    const userInfo = os.userInfo();
+    res.json({ username: userInfo.username });
+  } catch (err) {
+    console.error('Failed to get OS user info:', err);
+    res.status(500).json({ username: 'Unknown' });
+  }
+});
+
+// API: Discover microservices with UIs
 app.get('/api/microservices', async (req, res) => {
   try {
-    
     const containers = await docker.listContainers();
     const services = [];
 
     for (const container of containers) {
-      
       const name = container.Names[0].replace(/^\//, '');
+      if (name.startsWith('xbde-frame')) continue;
 
-
-      if (name.startsWith('host-it')) continue; // ignore self
-
-      
       const portInfo = container.Ports.find(p => p.Type === 'tcp' && p.PublicPort);
-      
-
-      if (!portInfo) continue; // skip if no exposed 8080 port
+      if (!portInfo) continue;
 
       const url = `http://${name}:${portInfo.PrivatePort}`;
       console.log(`Trying ${name} at ${url}`);
@@ -61,10 +66,9 @@ app.get('/api/microservices', async (req, res) => {
           const html = await response.text();
           const dom = new JSDOM(html);
           const title = dom.window.document.title || name;
-
           services.push({ name, port: portInfo.PublicPort, title });
         } catch {
-          // Skip malformed HTML
+          services.push({ name, port: portInfo.PublicPort, title: name });
         }
       }
     }
@@ -77,5 +81,5 @@ app.get('/api/microservices', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Host-it running at http://localhost:${PORT}`);
+  console.log(`xbde-frame running at http://localhost:${PORT}`);
 });

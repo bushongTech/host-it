@@ -3,9 +3,9 @@ networks:
     driver: bridge
 
 services:
-  host-it:
-    build: .
-    container_name: host-it
+  xbde-frame:
+    build: ./xbde-gui
+    container_name: xbde-frame
     ports:
       - "8080:8080"
     volumes:
@@ -14,14 +14,5 @@ services:
       - microservice-net
     restart: unless-stopped
 
-  # hello-microservice:
-  #   build:
-  #     context: ./hello-microservice
-  #   container_name: hello-microservice
-  #   ports:
-  #     - "8081:8080"  # Host port 8081 mapped to container port 8080
-  #   networks:
-  #     - microservice-net
-  #   restart: unless-stopped
 
 
