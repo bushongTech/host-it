@@ -1,0 +1,49 @@
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+#drop-zone {
+  border: 2px dashed #666;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  background-color: #1e1e1e;
+  color: #bbb;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+#drop-zone.drag-over {
+  border-color: #66ff66;
+  background-color: #2a2a2a;
+}
+
+#file-input {
+  display: block;
+  margin: 1rem auto;
+  color: #e0e0e0;
+}
+
+#upload-btn {
+  background-color: #66ff66;
+  color: #121212;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+#upload-btn:hover {
+  background-color: #55dd55;
+}
