@@ -1,7 +1,4 @@
-networks:
-  microservice-net:
-    driver: bridge
-
+name: xbde
 services:
   xbde-frame:
     build: ./xbde-gui
@@ -13,6 +10,21 @@ services:
     networks:
       - microservice-net
     restart: unless-stopped
+
+  tdms-uploader:
+    build: .
+    container_name: tdms-uploader
+    ports:
+      - "8508:8080"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./converted:/app/converted
+    networks:
+      - xbde-network
+
+networks:
+  xbde-network:
+    driver: bridge
 
 
 
