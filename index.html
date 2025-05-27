@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>TDMS Uploader</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Upload TDMS File</h1>
+  <h1>TDMS Uploader Form</h1>
+
+  <form id="test-form">
+    <input type="text" name="articleId" placeholder="Article ID" required />
+    
+    <select name="testType" multiple required>
+      <option value="Electrical">Electrical</option>
+      <option value="Thermal">Thermal</option>
+      <option value="Mechanical">Mechanical</option>
+    </select>
+
+    <input type="datetime-local" name="testDate" required />
+    <input type="text" name="testOperator" placeholder="Test Operator" required />
+    <input type="number" name="ambientBuildingTemp" placeholder="Ambient Building Temp" required />
+    <input type="number" name="ambientTemp" placeholder="Ambient Temp" required />
+  </form>
+
   <div id="drop-zone">Drag & Drop your TDMS file here</div>
   <input type="file" id="file-input" accept=".tdms" />
-  <button id="upload-btn">Upload</button>
+  <button id="upload-btn" disabled>Upload</button>
+
   <script src="script.js"></script>
 </body>
 </html>
