@@ -1,35 +1,53 @@
-<form id="test-form">
-  <div class="form-row">
-    <label for="articleId">Article ID</label>
-    <input type="text" name="articleId" id="articleId" required />
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TDMS Uploader</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>TDMS Uploader Form</h1>
 
-  <div class="form-row">
-    <label for="testType">Test Type</label>
-    <select name="testType" id="testType" multiple required>
-      <option value="Electrical">Electrical</option>
-      <option value="Thermal">Thermal</option>
-      <option value="Mechanical">Mechanical</option>
-    </select>
-  </div>
+  <form id="test-form">
+    <div class="form-row">
+      <label for="articleId">Article ID</label>
+      <input type="text" name="articleId" id="articleId" required />
+    </div>
 
-  <div class="form-row">
-    <label for="testDate">Test Date</label>
-    <input type="datetime-local" name="testDate" id="testDate" required />
-  </div>
+    <div class="form-row">
+      <label for="testType">Test Type</label>
+      <select name="testType" id="testType" multiple required>
+        <option value="Electrical">Electrical</option>
+        <option value="Thermal">Thermal</option>
+        <option value="Mechanical">Mechanical</option>
+      </select>
+    </div>
 
-  <div class="form-row">
-    <label for="testOperator">Test Operator</label>
-    <input type="text" name="testOperator" id="testOperator" required />
-  </div>
+    <div class="form-row">
+      <label for="testDate">Test Date</label>
+      <input type="datetime-local" name="testDate" id="testDate" required />
+    </div>
 
-  <div class="form-row">
-    <label for="ambientBuildingTemp">Ambient Building Temp</label>
-    <input type="number" name="ambientBuildingTemp" id="ambientBuildingTemp" required />
-  </div>
+    <div class="form-row">
+      <label for="testOperator">Test Operator</label>
+      <input type="text" name="testOperator" id="testOperator" required />
+    </div>
 
-  <div class="form-row">
-    <label for="ambientTemp">Ambient Temp</label>
-    <input type="number" name="ambientTemp" id="ambientTemp" required />
-  </div>
-</form>
+    <div class="form-row">
+      <label for="ambientBuildingTemp">Ambient Building Temp</label>
+      <input type="number" name="ambientBuildingTemp" id="ambientBuildingTemp" required />
+    </div>
+
+    <div class="form-row">
+      <label for="ambientTemp">Ambient Temp</label>
+      <input type="number" name="ambientTemp" id="ambientTemp" required />
+    </div>
+  </form>
+
+  <div id="drop-zone">Drag & Drop your TDMS file here</div>
+  <input type="file" id="file-input" accept=".tdms" />
+  <button id="upload-btn" disabled>Upload</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
