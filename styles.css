@@ -93,3 +93,19 @@ select[multiple] {
 #upload-btn:hover:enabled {
   background-color: #55dd55;
 }
+
+#reset-btn {
+  background-color: #cc3333;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+#reset-btn:hover {
+  background-color: #aa2222;
+}
