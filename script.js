@@ -49,3 +49,23 @@ uploadBtn.addEventListener('click', () => {
       alert('Upload failed');
     });
 });
+
+const resetBtn = document.getElementById('reset-btn');
+
+resetBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  // Clear form inputs
+  form.reset();
+
+  // Clear selected file and reset drop zone
+  selectedFile = null;
+  dropZone.textContent = 'Drag & Drop your TDMS file here';
+  fileInput.value = '';
+
+  // Disable the upload button
+  uploadBtn.disabled = true;
+});
+
+
+
