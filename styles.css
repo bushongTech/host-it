@@ -1,6 +1,7 @@
+/* ----------  Global  ---------- */
 body {
-  background-color: #121212;
-  color: #e0e0e0;
+  background-color: #121212;     
+  color: #e0e0e0;                
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 2rem;
   text-align: center;
@@ -11,11 +12,12 @@ h1 {
   font-size: 2rem;
 }
 
+/* ----------  FORM LAYOUT  ---------- */
 form#test-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1rem;                     
   margin-bottom: 2rem;
 }
 
@@ -24,7 +26,7 @@ form#test-form {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 400px;              
 }
 
 label {
@@ -33,7 +35,8 @@ label {
   color: #bbb;
 }
 
-input, select {
+input,
+select {
   width: 100%;
   padding: 0.5rem;
   background-color: #1e1e1e;
@@ -42,17 +45,18 @@ input, select {
   color: #eee;
 }
 
+/* Taller box for multi-select dropdown */
 select[multiple] {
   height: 100px;
 }
 
+/* ----------  Drag and drop  ---------- */
 #drop-zone {
   border: 2px dashed #666;
   padding: 2rem;
   background-color: #1e1e1e;
   color: #bbb;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   cursor: pointer;
   transition: border-color 0.3s, background-color 0.3s;
 }
@@ -62,6 +66,7 @@ select[multiple] {
   background-color: #2a2a2a;
 }
 
+/* ----------  Upload button  ---------- */
 #upload-btn {
   background-color: #66ff66;
   color: #121212;
@@ -70,7 +75,6 @@ select[multiple] {
   font-size: 1rem;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 1rem;
   transition: background-color 0.2s;
 }
 
