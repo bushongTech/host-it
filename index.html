@@ -1,32 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Test Data Storage</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <h1>Test Data Storage</h1>
+<form id="test-form">
+  <div class="form-row">
+    <label for="articleId">Article ID</label>
+    <input type="text" name="articleId" id="articleId" required />
+  </div>
 
-  <form id="test-form">
-    <input type="text" name="articleId" placeholder="Article ID" required />
-    
-    <select name="testType" multiple required>
+  <div class="form-row">
+    <label for="testType">Test Type</label>
+    <select name="testType" id="testType" multiple required>
       <option value="Electrical">Electrical</option>
       <option value="Thermal">Thermal</option>
       <option value="Mechanical">Mechanical</option>
     </select>
+  </div>
 
-    <input type="datetime-local" name="testDate" required />
-    <input type="text" name="testOperator" placeholder="Test Operator" required />
-    <input type="number" name="ambientBuildingTemp" placeholder="Ambient Building Temp" required />
-    <input type="number" name="ambientTemp" placeholder="Ambient Temp" required />
-  </form>
+  <div class="form-row">
+    <label for="testDate">Test Date</label>
+    <input type="datetime-local" name="testDate" id="testDate" required />
+  </div>
 
-  <div id="drop-zone">Drag & Drop your TDMS file here</div>
-  <input type="file" id="file-input" accept=".tdms" />
-  <button id="upload-btn" disabled>Upload</button>
+  <div class="form-row">
+    <label for="testOperator">Test Operator</label>
+    <input type="text" name="testOperator" id="testOperator" required />
+  </div>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <div class="form-row">
+    <label for="ambientBuildingTemp">Ambient Building Temp</label>
+    <input type="number" name="ambientBuildingTemp" id="ambientBuildingTemp" required />
+  </div>
+
+  <div class="form-row">
+    <label for="ambientTemp">Ambient Temp</label>
+    <input type="number" name="ambientTemp" id="ambientTemp" required />
+  </div>
+</form>
